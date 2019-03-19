@@ -39,7 +39,7 @@ var EventReceiver = (function () {
                             for (var i = 0; i < bodyList.length; i++) {
                                 var kv = bodyList[i];
                                 log(kv);
-                                if (!kv.startsWith('data:')) {
+                                if (kv.indexOf('data:') !== 0) {
                                     continue;
                                 } else {
                                     event = JSON.parse(kv.replace('data:', ''));
@@ -97,7 +97,7 @@ var EventReceiver = (function () {
                 eventReceiver = new EventSource(url, option);
 
                 eventReceiver.onmessage = function (e) {
-                    log(e);
+                    log("triggered session " + e);
                     var parsed = JSON.parse(e.data);
                     callback(parsed);
                 };
