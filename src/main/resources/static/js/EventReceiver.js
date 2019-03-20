@@ -1,5 +1,5 @@
 var EventReceiver = (function () {
-
+    "use strict";
     function log(msg) {
         if (console.log) {
             console.log(msg);

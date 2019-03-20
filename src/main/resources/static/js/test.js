@@ -1,6 +1,8 @@
-var Test = function (panelId) {
+var Test = function (option) {
+    "use strict";
     var nativeEventSource = window.EventSource !== undefined;
-    var panel = document.getElementById(panelId);
+    var panel = document.getElementById(option.panel);
+    var sessionLabel = document.getElementById(option.sessionLabel);
 
     if (panel == null) {
         alert("panel not found");
@@ -27,7 +29,7 @@ var Test = function (panelId) {
     // https://gist.github.com/jcxplorer/823878
     function uuid() {
         var uuid = "", i, random;
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < 8; i++) {
             random = Math.random() * 16 | 0;
 
             if (i == 8 || i == 12 || i == 16 || i == 20) {
@@ -43,13 +45,22 @@ var Test = function (panelId) {
             loggingPanel("init");
             loggingPanel('event source is ' + (nativeEventSource ? "enable" : 'disable'));
             var session = uuid();
+            sessionLabel.innerHTML = session;
+
             var receiver = new EventReceiver('/push?session='+session);
             loggingPanel('enable session ' + session);
             receiver.then(function (data){
-                loggingPanel('data: ' + JSON.stringify(data));
+                loggingPanel('data('+new Date().toString()+'): ' + JSON.stringify(data));
             }).ping(function (ping) {
                 loggingPanel('ping: ' + ping.time);
+            }).error(function (error) {
+                loggingPanel('error:' + error);
             });
         }
     };
 };
+
+window.Test = Test;
+
+var app = new Test({panel:'console', sessionLabel:'session'});
+window.addEventListener("load", app.init);

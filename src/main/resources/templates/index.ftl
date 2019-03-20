@@ -21,14 +21,12 @@
 <body>
 <h1>Server push send test</h1>
 <hr/>
+session : <span id="session"></span>
 <div id="console" class="border scrollable">
 
 </div>
 </body>
+<script type="application/javascript" src="/webjars/requirejs/2.3.6/require.min.js"></script>
 <script type="application/javascript" src="/js/EventReceiver.js"></script>
 <script type="application/javascript" src="/js/test.js"></script>
-<script>
-    var app = Test('console');
-    window.addEventListener("load", app.init);
-</script>
 </html>
