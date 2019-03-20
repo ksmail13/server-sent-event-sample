@@ -31,7 +31,7 @@ public class PushController {
 
         Flux<ServerSentEvent<String>> trigger = getTrigger(session);
 
-        return Flux.merge(Flux.fromIterable(Arrays.asList(pingFlux, trigger))).log("test-event");
+        return Flux.merge(Flux.fromIterable(Arrays.asList(pingFlux, trigger)));
     }
 
     @PostMapping(path = "/push", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -45,7 +45,7 @@ public class PushController {
     }
 
     private Flux<ServerSentEvent<String>> getTrigger(String session) {
-        return this.trigger.getSessionProcessor()
+        return this.trigger.triggerProducer()
                 .filter(s -> s.equals(session))
                 .map(this::newTriggeredMessage);
     }
