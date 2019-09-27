@@ -3,14 +3,12 @@ package io.github.ksmail13.sse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.reactive.function.server.*;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.EmitterProcessor;
-import reactor.core.publisher.Mono;
-import reactor.core.publisher.TopicProcessor;
-import reactor.util.Loggers;
 
 import java.time.Duration;
-import java.util.Optional;
 
 @SpringBootApplication
 public class SseApplication {
@@ -21,7 +19,7 @@ public class SseApplication {
 
     @Bean
     public Duration heartbeatPeriod() {
-        return Duration.ofSeconds(5);
+        return Duration.ofMinutes(5);
     }
 
     @Bean
